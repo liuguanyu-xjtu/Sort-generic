@@ -1,0 +1,63 @@
+
+public abstract class Sort<T> {
+	public abstract boolean judge(T a,T b);
+
+	
+	
+	public T[] bubble_sort(T[] A){
+		int l=A.length;
+		for(int i=0;i<l-1;i++){
+			for(int j=0;j<l-1-i;j++){
+				
+				boolean r=!judge(A[j],A[j+1]);
+				if(r){
+					T t=A[j+1];
+					A[j+1]=A[j];
+					A[j]=t;
+				}
+			}
+		}
+		return A;
+	}
+	public T[] merge_sort(T[] A){
+		int l=A.length;
+		if(l==1){
+			return A;
+		}else{
+			int l1=l/2;
+			T[] D=java.util.Arrays.copyOfRange(A, 0,l);
+			T[] B=java.util.Arrays.copyOfRange(A, 0,l1);
+			B=merge_sort(B);
+			T[] C=java.util.Arrays.copyOfRange(A, l1,l);
+			C=merge_sort(C);
+			int j=0,k=0;
+			for (int i=0;i<l;i++){
+				D[i]=(judge(B[j],C[k]))?B[j]:C[k];
+				boolean r=(judge(B[j],C[k]));
+				if(r){
+					j++;
+				}else{
+					k++;
+				}
+				if(j==B.length){
+					for(int m=i+1;m<l;m++){
+						D[m]=C[k];
+						k++;
+					}
+					
+					break;
+				}
+				if(k==C.length){
+					for(int m=i+1;m<l;m++){
+						D[m]=B[j];
+						j++;
+					}
+					break;
+				}
+			}
+			A=D;return A;
+		}
+		
+		
+	}
+}
